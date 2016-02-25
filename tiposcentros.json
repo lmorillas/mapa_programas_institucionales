@@ -1,0 +1,90 @@
+{
+    "items": [{
+        "type": "tipo",
+        "label": "Primaria y secundaria",
+        "id": "CPRI-INPRISE"
+    }, {
+        "type": "tipo",
+        "label": "Secundaria",
+        "id": "IES"
+    }, {
+        "type": "tipo",
+        "label": "Ed. Especial",
+        "id": "CEE"
+    }, {
+        "type": "tipo",
+        "label": "Secundaria",
+        "id": "CPRI-ES"
+    }, {
+        "type": "tipo",
+        "label": "Infantil y primaria",
+        "id": "CEIP"
+    }, {
+        "type": "tipo",
+        "label": "Secundaria",
+        "id": "SEC-IES"
+    }, {
+        "type": "tipo",
+        "label": "Ed. Especial",
+        "id": "CPRI-EE"
+    }, {
+        "type": "tipo",
+        "label": "Infantil",
+        "id": "EEI"
+    }, {
+        "type": "tipo",
+        "label": "Formaci\u00f3n profesional",
+        "id": "CPRI-FPE"
+    }, {
+        "type": "tipo",
+        "label": "C. Rural Agrupado",
+        "id": "CRA"
+    },
+    {
+        "type": "tipo",
+        "label": "Formación profesional",
+        "id": "CINTFP"
+    },
+     {
+        "type": "tipo",
+        "label": "Formación profesional",
+        "id": "IFPE"
+    },
+    {
+        "type": "tipo",
+        "label": "Centro rural de innovación educativa",
+        "id": "CRIE"
+    },
+    {
+        "type": "tipo",
+        "label": "Adultos",
+        "id": "CPEAPA"
+    },
+     {
+        "type": "tipo",
+        "label": "Adultos",
+        "id": "CPEPA"
+    },
+     {
+        "type": "tipo",
+        "id": "CPRI-INFPRI",
+        "label": "Infantil y primaria"
+    },
+     {
+        "type": "tipo",
+        "label": "Formación profesional",
+        "id": "CPRI-INTFP"
+    },
+     {
+        "type": "tipo",
+        "label": "Primaria",
+        "id": "CPRI-PRI"
+    },
+     {
+        "type": "tipo",
+        "label": "Primaria y secundaria",
+        "id": "CPRI-PRISEC"
+    }
+    ]
+}
+
