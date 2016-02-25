@@ -84,6 +84,16 @@
         "type": "tipo",
         "label": "Primaria y secundaria",
         "id": "CPRI-PRISEC"
+    },
+    {
+        "type": "tipo",
+        "label": "Idiomas",
+        "id": "EOI"
+    },
+    {
+        "type": "tipo",
+        "label": "Música",
+        "id": "Música"
     }
     ]
 }
