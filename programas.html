@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css">
     <script src="//cdn.jsdelivr.net/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+    var tableStyler = function(table, database) {
+        $(table).addClass("table table-hover");
+    };
+    </script>
     <script>
     $(document).bind("dataload.exhibit", function() {
         $("div.exhibit-text-facet input").addClass("form-control");
@@ -56,8 +61,23 @@
 <body>
     <div class="container-fluid" style="padding:0;">
         <div data-ex-role="exhibit-collection" data-ex-item-types="Item"></div>
+        <!-- color coder -->
+        <div data-ex-role="coder" data-ex-coder-class="Color" id="colores-centros" style="display: none;">
+            <span data-ex-color="blue">Ed. Especial</span>
+            <span data-ex-color="red">Primaria</span>
+            <span data-ex-color="#FF00FF">Secundaria</span>
+            <span data-ex-color="yellow">Formación profesional</span>
+            <span data-ex-color="#cc9900">C. Rural Agrupado</span>
+            <span data-ex-color="#009A57">Infantil</span>
+            <span data-ex-color="green">Infantil y primaria</span>
+            <span data-ex-color="orange">Primaria y secundaria</span>
+            <span data-ex-color="grey">Adultos</span>
+            <span data-ex-color="darkgreen">Centro rural de innovación educativa</span>
+            <span data-ex-case="others" data-ex-color="">white</span>
+            <span data-ex-case="mixed" data-ex-color="lightblue">Varias enseñanzas</span>
+        </div>
         <div class="map-lens" data-ex-role="lens" style="display: none" data-ex-item-types="Item">
-        <h3 data-ex-content=".label"></h3>
+            <h3 data-ex-content=".label"></h3>
             <div class="table-responsive">
                 <table class="table">
                     <tr>
@@ -78,24 +98,26 @@
                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".ccentro.tipo.label" data-ex-facet-label="Tipos de centros" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
             </div>
             <div class="col-sm-6">
-                <!-- color coder -->
-                <div data-ex-role="coder" data-ex-coder-class="Color" id="colores-centros" style="display: none;">
-                    <span data-ex-color="blue">Ed. Especial</span>
-                    <span data-ex-color="red">Primaria</span>
-                    <span data-ex-color="#FF00FF">Secundaria</span>
-                    <span data-ex-color="yellow">Formación profesional</span>
-                    <span data-ex-color="#cc9900">C. Rural Agrupado</span>
-                    <span data-ex-color="#009A57">Infantil</span>
-                    <span data-ex-color="green">Infantil y primaria</span>
-                    <span data-ex-color="orange">Primaria y secundaria</span>
-                    <span data-ex-color="grey">Adultos</span>
-                    <span data-ex-color="darkgreen">Centro rural de innovación educativa</span>
-                    <span data-ex-case="others" data-ex-color="">white</span>
-                    <span data-ex-case="mixed" data-ex-color="lightblue">Varias enseñanzas</span>
-                </div>
-                <!-- información del recurso -->
-                <!-- mapa -->
-                <div data-ex-role="view" data-ex-view-class="Map" data-ex-label="Mapa de centros" data-ex-latlng=".ccentro.coord" data-ex-autoposition="true" data-ex-map-height="500" data-ex-show-tool-box="true" data-ex-map-constructor="map_with_borders" data-ex-shape-width="16" data-ex-shape-height="16" data-ex-pin="false" data-ex-color-key=".ccentro.tipo.label" data-ex-color-coder="colores-centros" data-ex-marker-label-point=".ccentro.label">
+                <div data-ex-role="viewPanel">
+                    <!-- información del recurso -->
+                    <!-- mapa -->
+                    <div data-ex-role="view" data-ex-view-class="Map" data-ex-label="Mapa de centros" data-ex-latlng=".ccentro.coord" data-ex-autoposition="true" data-ex-map-height="500" data-ex-show-tool-box="true" data-ex-map-constructor="map_with_borders" data-ex-shape-width="16" data-ex-shape-height="16" data-ex-pin="false" data-ex-color-key=".ccentro.tipo.label" data-ex-color-coder="colores-centros" data-ex-marker-label-point=".ccentro.label">
+                    </div>
+                    <div data-ex-role="view" data-ex-label="Listado de programas" data-ex-view-class="Tabular" data-ex-columns=".label, .ccentro.label, .ccentro.tipo.label" data-ex-column-labels="Programa, Centro, Nivel" data-ex-table-styler="tableStyler" data-ex-paginate="true" data-ex-page-size="25">
+                        <table style="display: none;">
+                            <tr>
+                                <td style="width: 40%"><span data-ex-content=".label"></span></td>
+                                <td style="width: 30%">
+                                    <p>
+                                        <a target="_parent" data-ex-href-subcontent="http://innovacion.educa.aragon.es/w/index.php?curid={{.ccentro.pagina}}" style="text-decoration: underline;"><span data-ex-content=".ccentro.label"></span></a>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p data-ex-content=".ccentro.tipo.label"></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3">
