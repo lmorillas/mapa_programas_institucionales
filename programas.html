@@ -55,12 +55,34 @@
         });
         return map;
     }
+
+    function changeHref(item){
+        item.href = '//innovacion.educa.aragon.es/wiki/Catálogo:' + item.text;
+        item.setAttribute('target', '_blank');
+    }
+
+    function showProjects(centro) {
+    var itemID = centro.getAttribute("itemid");
+    var datos = centro.getElementsByClassName('exhibit-item');
+    for (i=0; i<datos.length; i++){
+        datos[i].href = 'http://innovacion.educa.aragon.es/wiki/Catálogo:' + datos[i].textContent;
+        datos[i].target = '_blank';
+
+    }
+    if (datos.length > 1) {
+        jQuery(datos).wrap('<li></li>');
+        ds = centro.getElementsByClassName('datosproyectos')
+        jQuery(ds).contents().filter(function() {
+            return (this.nodeType == 3);
+        }).remove();
+    }
+}
     </script>
 </head>
 
 <body>
     <div class="container-fluid" style="padding:0;">
-        <div data-ex-role="exhibit-collection" data-ex-item-types="Item"></div>
+        <div data-ex-role="exhibit-collection" data-ex-item-types="cen"></div>
         <!-- color coder -->
         <div data-ex-role="coder" data-ex-coder-class="Color" id="colores-centros" style="display: none;">
             <span data-ex-color="blue">Ed. Especial</span>
@@ -78,33 +100,27 @@
             <span data-ex-case="others" data-ex-color="">white</span>
             <span data-ex-case="mixed" data-ex-color="lightblue">Varias enseñanzas</span>
         </div>
-        <div class="map-lens" data-ex-role="lens" style="display: none" data-ex-item-types="Item">
+        <div class="map-lens" data-ex-role="lens" style="display: none" data-ex-item-types="act">
             <p><strong><span data-ex-content=".label"></span></strong></p>
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        <th>Centro</th>
-                        <td><a target="_parent" data-ex-href-subcontent="http://innovacion.educa.aragon.es/w/index.php?curid={{.ccentro.pagina}}" style="text-decoration: underline;"><span data-ex-content=".ccentro.label"></span></a></td>
-                    </tr>
-                    <tr>
-                        <th>Programa</th>
-                        <td><a title="Enlace al catálogo de programas" target="_blank" data-ex-href-content=".cproy.catalogo"><span data-ex-content=".cproy.label"></span></a></td>
-                    </tr>
-                </table>
-            </div>
+                        <a title="Enlace al catálogo de programas" target="_blank" data-ex-href-content=".label"><span data-ex-content=".label"></span></a>
         </div>
         <div class="row " id="content" style="margin:0;">
             <div class="col-sm-3">
-                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-facet-class="TextSearch" data-ex-facet-label="Buscar en el mapa" data-ex-expressions=".label,.ccentro.label">
+                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-facet-class="TextSearch" data-ex-facet-label="Buscar en el mapa" data-ex-expressions=".label,!ccentro.label">
                 </div>
-                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".ccentro.tipo.label" data-ex-facet-label="Tipos de centros" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
-                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".ccentro.prov" data-ex-facet-label="Provincia" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
+                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".tipo.label" data-ex-facet-label="Tipos de centros" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
+                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".prov" data-ex-facet-label="Provincia" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
             </div>
             <div class="col-sm-6">
                 <div data-ex-role="viewPanel">
                     <!-- información del recurso -->
                     <!-- mapa -->
-                    <div data-ex-role="view" data-ex-view-class="Map" data-ex-label="Mapa de centros" data-ex-latlng=".ccentro.coord" data-ex-autoposition="true" data-ex-map-height="500" data-ex-show-tool-box="true" data-ex-map-constructor="map_with_borders" data-ex-shape-width="16" data-ex-shape-height="16" data-ex-pin="false" data-ex-color-key=".ccentro.tipo.label" data-ex-color-coder="colores-centros" data-ex-marker-label-point=".ccentro.label">
+                    <div data-ex-role="view" data-ex-view-class="Map" data-ex-label="Mapa de centros" data-ex-latlng=".coord" data-ex-autoposition="true" data-ex-map-height="500" data-ex-show-tool-box="true" data-ex-map-constructor="map_with_borders" data-ex-shape-width="16" data-ex-shape-height="16" data-ex-pin="false" data-ex-color-key=".tipo.label" data-ex-color-coder="colores-centros" >
+                    <div class="map-lens" data-ex-item-types="cen" data-ex-role="lens" style="display: none" data-ex-onshow="showProjects(this)">
+                    <p style="font-weight: bold;"><span data-ex-content=".label"></span> </p>
+                    <p id="projectList"><strong>Proyectos:</strong> <span class="datosproyectos" data-ex-content="!ccentro.cproy"></span></p>
+
+                </div>
                     </div>
                     <div data-ex-role="view" data-ex-label="Listado de programas" data-ex-view-class="Tabular" data-ex-columns=".label, .ccentro.label, .ccentro.tipo.label" data-ex-column-labels="Programa, Centro, Nivel" data-ex-table-styler="tableStyler" data-ex-paginate="true" data-ex-page-size="25">
                         <table style="display: none;">
@@ -124,7 +140,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".cproy" data-ex-facet-label="Proyectos" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-height="600px"></div>
+                <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression="!ccentro.cproy" data-ex-facet-label="Programas" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-height="600px"></div>
             </div>
         </div>
         <footer>
