@@ -67,8 +67,9 @@
     for (i=0; i<datos.length; i++){
         datos[i].href = 'http://innovacion.educa.aragon.es/wiki/Catálogo:' + datos[i].textContent;
         datos[i].target = '_blank';
-
     }
+    jQuery(datos).unbind('click');
+
     if (datos.length > 1) {
         jQuery(datos).wrap('<li></li>');
         ds = centro.getElementsByClassName('datosproyectos')
@@ -100,10 +101,12 @@
             <span data-ex-case="others" data-ex-color="">white</span>
             <span data-ex-case="mixed" data-ex-color="lightblue">Varias enseñanzas</span>
         </div>
+        <!--
         <div class="map-lens" data-ex-role="lens" style="display: none" data-ex-item-types="act">
             <p><strong><span data-ex-content=".label"></span></strong></p>
                         <a title="Enlace al catálogo de programas" target="_blank" data-ex-href-content=".label"><span data-ex-content=".label"></span></a>
         </div>
+        -->
         <div class="row " id="content" style="margin:0;">
             <div class="col-sm-3">
                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-facet-class="TextSearch" data-ex-facet-label="Buscar en el mapa" data-ex-expressions=".label,!ccentro.label">
