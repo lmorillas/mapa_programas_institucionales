@@ -1,0 +1,1 @@
+{"properties": {"cproy": {"valueType": "item"}, "ccentro": {"valueType": "item"}, "tipo": {"valueType": "item"}}, "types": {"Item": {"pluralLabel": "programas", "label": "programa"}, "cen": {"label":"centro educativo", "pluralLabel": "centros educativos"}}}
