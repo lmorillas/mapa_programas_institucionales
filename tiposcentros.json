@@ -46,7 +46,7 @@
         "id": "CINTFP"
     },
      {
-        "type": "tipo",
+       "type": "tipo",
         "label": "Formación profesional",
         "id": "IFPE"
     },
@@ -93,7 +93,7 @@
     {
         "type": "tipo",
         "label": "Música",
-        "id": "Conservatorio Superior de Música"
+        "id": "CONSSUPMUS"
     }
     ]
 }
