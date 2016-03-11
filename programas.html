@@ -5,14 +5,16 @@
     <meta charset="utf-8">
     <title>Programas educativos Aragón</title>
     <!-- metadata -->
-    <!-- Datos + importadores
-    <link href="" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true">
-    <link href="" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true" data-ex-value-separator=",">
-    -->
-    <link href="http://innovacion.educa.aragon.es/w/index.php?title=Especial:CargoExport&tables=ParticipacionProgramas%2CCentrosDB&join+on=ParticipacionProgramas.ccentro%3DCentrosDB.ccentro&fields=ddencor%3Dtipo%2Cdprov%3Dprov%2Cdenom%3Dlabel%2C%22cen%22%3Dtype%2CParticipacionProgramas.ccentro%3Did%2C+coord__full%3Dcoord%2Cdmunic%3Dmunicipio&where=ParticipacionProgramas.ccentro+is+not+null+and+CentrosDB.denom+is+not+null&group+by=ParticipacionProgramas.ccentro&limit=1000&format=csv" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true">
+    <!-- Datos + importadores -->
+<!--
+    <link href="centros.csv" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true">
+    <link href="programas.csv" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true" data-ex-value-separator=",">
+-->
+    <link href="//innovacion.educa.aragon.es/w/index.php?title=Especial:CargoExport&tables=ParticipacionProgramas&&fields=ccentro%2C+cproy%2CCONCAT%28%27p%27%2C_ID%29%3Dlabel&&limit=2000&format=csv&filename=programas.csv" type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true">
 
-    <link href="http://innovacion.educa.aragon.es/w/index.php?title=Especial:CargoExport&tables=ParticipacionProgramas&&fields=ccentro%2C+cproy%2CCONCAT%28%27p%27%2C_ID%29%3Dlabel&&limit=2000&format=csv"
+    <link href="//innovacion.educa.aragon.es/w/index.php?title=Especial:CargoExport&tables=ParticipacionProgramas%2CCentrosDB&join+on=ParticipacionProgramas.ccentro%3DCentrosDB.ccentro&fields=ddencor%3Dtipo%2CLEFT%28dprov%2C+1%29%3Dprov%2Cdenom%3Dlabel%2C%22cen%22%3Dtype%2CParticipacionProgramas.ccentro%3Did%2C+coord__full%3Dcoord%2Cdmunic%3Dmunicipio%2C+CentrosDB._pageID%3Dpagina&where=ParticipacionProgramas.ccentro+is+not+null+and+CentrosDB.denom+is+not+null&group+by=ParticipacionProgramas.ccentro&limit=1500&format=csv&filename=centros.csv"
                type="text/csv" rel="exhibit/data" data-ex-has-column-titles="true">
+
     <link href="schema.json" type="application/json" rel="exhibit-data">
     <!-- tipos de actividades -->
     <link href="actuaciones.json" type="application/json" rel="exhibit-data">
@@ -81,12 +83,39 @@
         }).remove();
     }
 }
+
+function provinciaFormatter (elmt){
+    switch (jQuery(elmt).find('.exhibit-flowingFacet-value-link').text()){
+        case "H":
+            jQuery(elmt).find('.exhibit-flowingFacet-value-link').html('Huesca');
+            break;
+        case "T":
+            jQuery(elmt).find('.exhibit-flowingFacet-value-link').html('Teruel');
+            break;
+        case "Z":
+            jQuery(elmt).find('.exhibit-flowingFacet-value-link').html('Zaragoza');
+            break;
+    }
+
+    switch (elmt[0].getAttribute('title')){
+        case "H":
+            elmt[0].setAttribute('title', 'Huesca');
+            break;
+        case "T":
+            elmt[0].setAttribute('title', 'Teruel');
+            break;
+        case "Z":
+            elmt[0].setAttribute('title', 'Zaragoza');
+    }
+}
+
     </script>
 </head>
 
 <body>
     <div class="container-fluid" style="padding:0;">
         <div data-ex-role="exhibit-collection" data-ex-item-types="cen"></div>
+
         <!-- color coder -->
         <div data-ex-role="coder" data-ex-coder-class="Color" id="colores-centros" style="display: none;">
             <span data-ex-color="blue">Ed. Especial</span>
@@ -115,10 +144,9 @@
                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-facet-class="TextSearch" data-ex-facet-label="Buscar en el mapa" data-ex-expressions=".label, !ccentro.cproy.label">
                 </div>
                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".tipo.label" data-ex-facet-label="Tipos de centros" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
-                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".prov" data-ex-facet-label="Provincia" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false"></div>
+                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression=".prov" data-ex-facet-label="Provincia" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-scroll="false" data-ex-formatter="provinciaFormatter"></div>
             </div>
             <div class="col-sm-6">
-                <div data-ex-role="viewPanel">
                     <!-- información del recurso -->
                     <!-- mapa -->
                     <div data-ex-role="view" data-ex-view-class="Map" data-ex-label="Mapa de centros" data-ex-latlng=".coord" data-ex-autoposition="true" data-ex-map-height="500" data-ex-show-tool-box="true" data-ex-map-constructor="map_with_borders" data-ex-shape-width="16" data-ex-shape-height="16" data-ex-pin="false" data-ex-color-key=".tipo.label" data-ex-color-coder="colores-centros" >
@@ -128,23 +156,8 @@
 
                 </div>
                     </div>
-                    <div data-ex-role="view" data-ex-label="Listado de programas" data-ex-view-class="Tabular" data-ex-columns=".label, .ccentro.label, .ccentro.tipo.label" data-ex-column-labels="Programa, Centro, Nivel" data-ex-table-styler="tableStyler" data-ex-paginate="true" data-ex-page-size="25">
-                        <table style="display: none;">
-                            <tr>
-                                <td style="width: 40%"><span data-ex-content=".label"></span></td>
-                                <td style="width: 30%">
-                                    <p>
-                                        <a target="_parent" data-ex-href-subcontent="http://innovacion.educa.aragon.es/w/index.php?curid={{.ccentro.pagina}}" style="text-decoration: underline;"><span data-ex-content=".ccentro.label"></span></a>
-                                    </p>
-                                </td>
-                                <td>
-                                    <p data-ex-content=".ccentro.tipo.label"></p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+
                 </div>
-            </div>
             <div class="col-sm-3">
                 <div class="mypanel" data-ex-role="exhibit-facet" data-ex-expression="!ccentro.cproy" data-ex-facet-label="Programas" data-ex-collapsible="true" data-ex-show-missing="false" data-ex-height="600px"></div>
             </div>
